@@ -42,7 +42,32 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         color:"#127cc0"
     },
-   
+    bottomSheetHeader:{
+        backgroundColor:"#95dcfc",
+        alignItems:'center',
+        flexDirection:'row',
+        justifyContent:'center',
+    },
+    bottomSheetHeaderText:{
+        color:"#127cc0",
+        fontSize:20,
+        fontWeight:'bold',
+        padding: 20,
+        alignSelf:'center',
+        
+    },
+    companyText:{
+        fontSize:16,
+        fontWeight:"bold",
+        flex: 1,
+    },
+    bottomSheetInnerView:{
+        flexDirection:'row',
+        paddingVertical:10,
+        alignItems:'center',
+        borderBottomWidth:1,
+        borderBottomColor:"#95dcfc",
+    },
     
 });
 

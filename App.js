@@ -1,10 +1,18 @@
 import { StyleSheet , View} from 'react-native'
-import React from 'react'
+import React ,{useContext} from 'react'
 import Main from './src/navigations/main/index'
+import Context, { Store } from './src/contexts/context'
+import PushNotifications from './src/notification'
+import AuthProvider from './src/contexts/AuthProvider'
 export default function App() {
   return (
     <View style={styles.container}>
-      <Main />
+    <Context>
+    <AuthProvider>
+    <PushNotifications />
+    <Main />
+    </AuthProvider>
+    </Context>
     </View>
   )
 }

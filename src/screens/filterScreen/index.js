@@ -1,5 +1,5 @@
-import { View, Text, Pressable, FlatList, ScrollView } from "react-native";
-import React, { useState, useEffect } from "react";
+import { View, Text, Pressable, FlatList, Dimensions } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./style";
 import Header from "../../components/header";
 import { AntDesign } from "@expo/vector-icons";
@@ -8,6 +8,9 @@ import { useNavigation } from "@react-navigation/native";
 import category from "../../assets/data/category.json";
 import product from "../../assets/data/product.json";
 import ProductCard from "../../components/productCard/index";
+import RBSheet from "react-native-raw-bottom-sheet";
+import { Entypo } from "@expo/vector-icons";
+import { Checkbox } from "react-native-paper";
 export default function FilterScreen(props) {
   const navigation = useNavigation();
   const [parents, setParents] = useState([]);
@@ -15,7 +18,9 @@ export default function FilterScreen(props) {
   const [parentPressed, setParentPressed] = useState("");
   const [subParentPressed, setSubParentPressed] = useState("");
   const [products, setProducts] = useState([]);
-  useState(async () => {
+  const [company, setCompany] = useState([]);
+  const refFilter = useRef();
+  useEffect(async () => {
     const data = category.filter((item) =>
       item.parent === props.route.params.category.id && item.subParent === null
         ? item
@@ -36,20 +41,12 @@ export default function FilterScreen(props) {
         }
       }
     }
-    for (let i = 0; i < data.length; i++) {
-      for (let k = 0; k < product.length; k++) {
-        if (data[i].id === product[k].category) {
-          proArray.push(product[k]);
-        }
-      }
-    }
-    for (let i = 0; i < product.length; i++) {
-      if (product[i].category === props.route.params.category.id) {
-        proArray.push(product[i]);
-      }
-    }
     setProducts(proArray);
-  });
+    setParentPressed(props.route.params.homeCategory);
+    const companyCheck = [];
+    proArray.forEach((item)=>{companyCheck.includes(item.company)?null:companyCheck.push(item.company)})
+    setCompany(companyCheck);
+  }, []);
 
   return (
     <View style={{ flex: 1, marginBottom: 100 }}>
@@ -61,10 +58,78 @@ export default function FilterScreen(props) {
         <Text style={styles.titleText}>
           {props.route.params.category.title}
         </Text>
-        <Pressable>
+        <Pressable
+          onPress={() => {
+            refFilter.current.open();
+          }}
+        >
           <MaterialIcons name="filter-tilt-shift" size={28} color="#127cc0" />
         </Pressable>
       </View>
+      <RBSheet
+        height={Dimensions.get("window").height - 100}
+        ref={refFilter}
+        closeOnDragDown={false}
+        closeOnPressMask={false}
+        animationType={"slide"}
+        customStyles={{
+          wrapper: {
+            backgroundColor: "transparent",
+          },
+          draggableIcon: {
+            backgroundColor: "",
+          },
+        }}
+      >
+        <View>
+          <View style={styles.bottomSheetHeader}>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.bottomSheetHeaderText}>Filters</Text>
+            </View>
+            <Pressable onPress={() => refFilter.current.close()}>
+              <Entypo
+                style={{ margin: 10 }}
+                name="cross"
+                size={24}
+                color="gray"
+              />
+            </Pressable>
+          </View>
+          <View style={{ margin: 10 }}>
+            <Text style={{ fontSize: 16 }}>sort by</Text>
+            <View style={{ flexDirection: "row" }}>
+              <Pressable style={styles.subParent}>
+                <Text style={styles.subParentText}>Price Low to high</Text>
+              </Pressable>
+              <Pressable style={styles.subParent}>
+                <Text style={styles.subParentText}>Price High to Low</Text>
+              </Pressable>
+            </View>
+            <View style={{ height: 400 }}>
+              <FlatList
+                data={company}
+                keyExtractor={(item,index) => index}
+                renderItem={({ item }) => {
+                  return (
+                    <View style={styles.bottomSheetInnerView}>
+                      <Text style={styles.companyText}>{item}</Text>
+                      <Checkbox status={"checked"} />
+                    </View>
+                  );
+                }}
+              />
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Pressable style={styles.subParent}>
+                <Text style={styles.subParentText}>Price Low to high</Text>
+              </Pressable>
+              <Pressable style={styles.subParent}>
+                <Text style={styles.subParentText}>Price High to Low</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </RBSheet>
 
       <View style={styles.parentView}>
         <FlatList
@@ -158,24 +223,29 @@ export default function FilterScreen(props) {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => {
             if (item.category === subParentPressed) {
-              return <ProductCard product={item}  onPressHandler={()=>{
-                navigation.navigate('Detail' , {product:item});
-              }}/>;
+              return (
+                <ProductCard
+                  product={item}
+                  onPressHandler={() => {
+                    navigation.navigate("Detail", { product: item });
+                  }}
+                />
+              );
             } else if (parentPressed) {
               if (subParentPressed) {
                 return null;
               }
-              if (parentPressed === item.category) {
-                return <ProductCard product={item}  onPressHandler={()=>{
-                  navigation.navigate('Detail' , {product:item});
-                }}/>;
-              }
               for (let i = 0; i < subParents.length; i++) {
                 if (subParents[i].subParent === parentPressed) {
                   if (subParents[i].id === item.category) {
-                    return <ProductCard product={item}  onPressHandler={()=>{
-                      navigation.navigate('Detail' , {product:item});
-                    }}/>;
+                    return (
+                      <ProductCard
+                        product={item}
+                        onPressHandler={() => {
+                          navigation.navigate("Detail", { product: item });
+                        }}
+                      />
+                    );
                   }
                 }
               }
@@ -183,9 +253,14 @@ export default function FilterScreen(props) {
               if (subParentPressed || parentPressed) {
                 return null;
               }
-              return <ProductCard product={item}  onPressHandler={()=>{
-                navigation.navigate('Detail' , {product:item});
-              }}/>;
+              return (
+                <ProductCard
+                  product={item}
+                  onPressHandler={() => {
+                    navigation.navigate("Detail", { product: item });
+                  }}
+                />
+              );
             }
           }}
         />

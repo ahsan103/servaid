@@ -7,8 +7,8 @@ const styles = StyleSheet.create({
    },
    buttonHeader:{
        borderBottomWidth:1,
-       borderBottomColor:"#f0f0f0",
-       backgroundColor:"white",
+       borderBottomColor:"#abdcf5",
+       backgroundColor:"#e1fcfc",
        alignItems:'flex-start',
        height:60,
        justifyContent:'center'
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
    },
    share:{
        justifyContent:'space-around',
-       backgroundColor:"#d1d1d1",
+       backgroundColor:"#abdcf5",
        width:40,
        height:40,
        alignItems:'center',
@@ -53,9 +53,9 @@ const styles = StyleSheet.create({
        
    },
    innerContainerOne:{
-       backgroundColor:"#f0f2fc",
+       backgroundColor:"#e1fcfc",
        paddingVertical:10,
-       marginTop:2,
+       marginVertical:4,
        
    },
    effectView:{
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderBottomWidth:4,
     borderBottomColor:"white",
+    backgroundColor:"#e1fcfc",
    },
    effectButton:{
        fontSize:18,
@@ -91,6 +92,40 @@ const styles = StyleSheet.create({
        fontSize:18,
        fontWeight:'bold',
    },
+   bottomSheetHeader:{
+       backgroundColor:"#abdcf5",
+       alignItems:'center',
+       flexDirection:'row',
+       justifyContent:'center',
+   },
+   bottomSheetHeaderText:{
+       color:"#127cc0",
+       fontSize:20,
+       fontWeight:'bold',
+       padding: 20,
+       alignSelf:'center',
+       
+   },
+   points:{
+       width: 85,
+       height:35,
+    marginTop:20,
+    marginLeft:10,
+    flexDirection:"row",
+    backgroundColor:'#f5d882',
+    borderRadius:50,
+    alignItems:'center',
+  },
+  star:{
+    width:40,
+    height:40,
+    
+  },
+  starText:{
+    fontWeight:"bold",
+    fontSize:16,
+
+  },
    
 });
 export default styles;

@@ -3,22 +3,23 @@ import { backgroundColor } from "react-native/Libraries/Components/View/ReactNat
 
 const styles = StyleSheet.create({
   container: {
-    width: 150,
+    width: 120,
     flexDirection: "row",
     backgroundColor: "#b1e3fa",
     borderRadius: 50,
+    height:40
   },
   button: {
     backgroundColor: "#127cc0",
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 360,
     margin: 5,
   },
   qtyView: {
-    width: 50,
+    width: 40,
     alignContent: "center",
     justifyContent: "center",
   },

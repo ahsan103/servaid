@@ -1,31 +1,39 @@
-import { View, Text, Image, FlatList, ScrollView , Pressable } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  ScrollView,
+  Pressable,
+} from "react-native";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../../components/header/index";
 import styles from "./style";
 import { FontAwesome } from "@expo/vector-icons";
 import CarouselImage from "../../components/carouselImage/index";
 import ProductCard from "../../components/productCard/index";
-import product from "../../assets/data/product.json";
 import { AntDesign } from "@expo/vector-icons";
 import HealthConcern from "../../components/healthConcern/index";
 import CategoryCard from "../../components/categoryCard/index";
 import category from "../../assets/data/category.json";
-import { useNavigation , useRoute} from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { Store } from "../../contexts/context";
 export default function HomeScreen() {
   const navigation = useNavigation();
   const ProductFlatList = () => {
+    const { prod } = useContext(Store);
     return (
       <View>
         <FlatList
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          data={product}
+          data={prod}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <ProductCard
               product={item}
-              onPressHandler={()=>{
-                navigation.navigate('Detail' , {product:item});
+              onPressHandler={() => {
+                navigation.navigate("Detail", { product: item });
               }}
             />
           )}
@@ -41,7 +49,16 @@ export default function HomeScreen() {
           showsHorizontalScrollIndicator={false}
           data={category}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (item.parent===null? <CategoryCard category={item} onPressHandler={()=>{navigation.navigate('Filter',{category:item})}}/> : null)}
+          renderItem={({ item }) =>
+            item.parent === null ? (
+              <CategoryCard
+                category={item}
+                onPressHandler={() => {
+                  navigation.navigate("Filter", { category: item });
+                }}
+              />
+            ) : null
+          }
         />
       </View>
     );
@@ -61,7 +78,12 @@ export default function HomeScreen() {
             />
           </View>
           <Text style={styles.underTitle}>Pakistan`s No. 1 Pharmacy</Text>
-          <Pressable style={styles.searchBar} onPress={()=>{navigation.navigate('Search')}} >
+          <Pressable
+            style={styles.searchBar}
+            onPress={() => {
+              navigation.navigate("Search");
+            }}
+          >
             <FontAwesome name="search" size={28} color="#127cc0" />
             <Text style={styles.searchbarText}> Search Product Here</Text>
           </Pressable>
@@ -109,7 +131,7 @@ export default function HomeScreen() {
           <Text style={styles.textTitle}>Shop by Health Care</Text>
         </View>
         <View>
-          <HealthConcern />
+          <HealthConcern navigate={navigation} />
         </View>
         <View>
           <Text style={styles.textTitle}>Immunity Boosters</Text>
