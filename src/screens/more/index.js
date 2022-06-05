@@ -16,6 +16,7 @@ import { Entypo } from '@expo/vector-icons';
 import MyAddress from "../myAddress";
 import MyOrder from "../myOrder";
 import Password from "../password";
+import {AuthContext} from '../../contexts/AuthProvider';
 import PersonalInfo from "../personalInfo";
 export default function MoreScreen() {
   const refLogin = useRef();
@@ -25,10 +26,10 @@ export default function MoreScreen() {
   const refAddress = useRef();
   const refPInfo = useRef();
   const refPass = useRef();
-  const [logged , setLogged] = useState(false)
+  const {logged , setLogged} = useContext(AuthContext);
  const navigation = useNavigation();
   return (
-    logged?(
+    !logged?(
     <View>
       <Header />
       <View style={styles.header}>
@@ -232,7 +233,7 @@ export default function MoreScreen() {
           />
         </View>
 
-        <Pressable style={[styles.innerView,{borderBottomWidth:0}]} onPress={()=>{setLogged(true)}}>
+        <Pressable style={[styles.innerView,{borderBottomWidth:0}]} onPress={()=>{setLogged(false)}}>
           <View style={[styles.icon,{backgroundColor:"#fab5b4"}]}>
             <Ionicons name="log-out" size={24} color="#ff524f" />
             

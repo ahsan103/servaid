@@ -7,7 +7,7 @@ import {
   Pressable,
   Dimensions,
 } from "react-native";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef , useContext } from "react";
 import { Card, Switch, RadioButton, TextInput } from "react-native-paper";
 import styles from "./style";
 import Header from "../../components/header/index";
@@ -19,12 +19,16 @@ import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import MyAddress from "../myAddress/index";
 import RBSheet from "react-native-raw-bottom-sheet";
+import { AuthContext } from "../../contexts/AuthProvider";
+import LoginPhone from "../loginPhone";
 export default function CheckOut() {
   const navigation = useNavigation();
   const refAddress = useRef();
+  const refLogin = useRef();
   const rePayment = useRef();
   const [button_1, setButton_1] = useState(false);
   const [button_2, setButton_2] = useState(false);
+  const{logged} = useContext(AuthContext)
   const Payment = () => {
     return (
       <RBSheet
@@ -93,6 +97,7 @@ export default function CheckOut() {
   return (
     <View style={{ flex: 1 }}>
       <MyAddress refAddress={refAddress} />
+      <LoginPhone refLogin={refLogin}/>
       <Payment />
       <Header />
       <View style={styles.buttonHeader}>
@@ -282,7 +287,7 @@ export default function CheckOut() {
           <Pressable
             style={styles.button}
             onPress={() => {
-              navigation.navigate("OrderPlace");
+              logged?navigation.navigate("OrderPlace"):(refLogin.current.open())
             }}
           >
             <Text style={styles.buttonText}>Place Order</Text>

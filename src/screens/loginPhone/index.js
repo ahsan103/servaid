@@ -1,7 +1,8 @@
 import { View, Text, Dimensions, Pressable } from "react-native";
-import React ,{useRef , useState} from "react";
+import React ,{useRef , useState , useContext} from "react";
 import styles from "./style";
 import RBSheet from "react-native-raw-bottom-sheet";
+import { AuthContext } from "../../contexts/AuthProvider";
 import { AntDesign } from "@expo/vector-icons";
 import { TextInput , RadioButton  } from "react-native-paper";
 import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
@@ -9,6 +10,7 @@ export default function LoginPhone(props) {
   const refLogin = props.refLogin;
   const refSign = useRef();
   const [checked, setChecked] = React.useState('first');
+  const{setLogged} = useContext(AuthContext)
   const SignUp=()=>{
     return(
       <RBSheet
@@ -97,7 +99,12 @@ export default function LoginPhone(props) {
       <Text>Female</Text>
          </View>
         </View>
-         <Pressable style={styles.button} onPress={()=>{refSign.current.open()}}>
+         <Pressable style={styles.button} onPress={()=>{
+          setLogged(true);
+           refLogin.current.close();
+           refSign.current.close()
+           
+           }}>
             <Text style={styles.buttonText}>Sign Up</Text>
           </Pressable>
         </View>

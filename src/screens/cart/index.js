@@ -73,7 +73,11 @@ export default function CartScreen() {
         </View>
         <Pressable
             style={styles.button}
-            onPress={()=>{navigation.navigate('CheckOut')}}
+            onPress={()=>{
+              
+              navigation.navigate('CheckOut')
+              
+              }}
           >
             <Text style={styles.buttonText}>Proceed To Checkout</Text>
           </Pressable>
