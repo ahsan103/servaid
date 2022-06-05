@@ -7,7 +7,7 @@ import {
   Pressable,
   Dimensions,
 } from "react-native";
-import React, { useState, useRef , useContext } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { Card, Switch, RadioButton, TextInput } from "react-native-paper";
 import styles from "./style";
 import Header from "../../components/header/index";
@@ -21,6 +21,7 @@ import MyAddress from "../myAddress/index";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { AuthContext } from "../../contexts/AuthProvider";
 import LoginPhone from "../loginPhone";
+import { Store } from "../../contexts/context";
 export default function CheckOut() {
   const navigation = useNavigation();
   const refAddress = useRef();
@@ -28,7 +29,8 @@ export default function CheckOut() {
   const rePayment = useRef();
   const [button_1, setButton_1] = useState(false);
   const [button_2, setButton_2] = useState(false);
-  const{logged} = useContext(AuthContext)
+  const { logged } = useContext(AuthContext);
+  const { setCartArray } = useContext(Store);
   const Payment = () => {
     return (
       <RBSheet
@@ -97,7 +99,7 @@ export default function CheckOut() {
   return (
     <View style={{ flex: 1 }}>
       <MyAddress refAddress={refAddress} />
-      <LoginPhone refLogin={refLogin}/>
+      <LoginPhone refLogin={refLogin} />
       <Payment />
       <Header />
       <View style={styles.buttonHeader}>
@@ -287,7 +289,12 @@ export default function CheckOut() {
           <Pressable
             style={styles.button}
             onPress={() => {
-              logged?navigation.navigate("OrderPlace"):(refLogin.current.open())
+              if (logged) {
+                navigation.navigate("OrderPlace");
+                setCartArray([]);
+              } else {
+                refLogin.current.open();
+              }
             }}
           >
             <Text style={styles.buttonText}>Place Order</Text>

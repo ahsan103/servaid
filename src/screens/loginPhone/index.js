@@ -28,7 +28,7 @@ export default function LoginPhone(props) {
         },
       }}
     >
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1 , backgroundColor:'#e1fcfc' }}>
         <Pressable
           style={styles.backButton}
           on
@@ -128,7 +128,7 @@ export default function LoginPhone(props) {
         },
       }}
     >
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1 , backgroundColor:'#e1fcfc'}}>
       <SignUp />
         <Pressable
           style={styles.backButton}

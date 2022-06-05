@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
    buttonHeader:{
        borderBottomWidth:1,
        borderBottomColor:"#abdcf5",
-       backgroundColor:"#e1fcfc",
+       backgroundColor:"#abdcf5",
        alignItems:'flex-start',
        height:60,
        justifyContent:'center'
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
        
    },
    innerContainerOne:{
-       backgroundColor:"#e1fcfc",
+       backgroundColor:"#abdcf5",
        paddingVertical:10,
        marginVertical:4,
        
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderBottomWidth:4,
     borderBottomColor:"white",
-    backgroundColor:"#e1fcfc",
+    backgroundColor:"#abdcf5",
    },
    effectButton:{
        fontSize:18,
