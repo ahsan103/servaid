@@ -1,3 +1,3 @@
--> create PostgreSQL 
+-> create PostgreSQL ✓ 
 -> push notification using firebase ✓ 
--> auth context # servaid_expo
+-> auth context # servaid_expo ✓ 
